@@ -13,6 +13,7 @@ const UserModel = db.define(
     password: { type: DataTypes.STRING },
     fotografia: { type: DataTypes.BLOB },
     ID_Tipo_usuario: { type: DataTypes.INTEGER },
+    status: { type: DataTypes.STRING },
   },
   {
     freezeTableName: true,

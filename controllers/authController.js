@@ -24,28 +24,33 @@ export const login = async (req, res) => {
         console.log("Email y/o contraseña incorrectos");
         isOnline = null;
       } else {
-        const id = results.ID_Usuario;
-        const tipo_usuario = results.ID_Tipo_usuario;
+        if (results.status !== "verified") {
+          console.log("El usuario no tiene la cuenta verificada");
+        } else {
 
-        //se determina si el usuario es administrador o no
-        tipo_usuario === 1 ? (isAdmin = true) : (isAdmin = false);
+          const id = results.ID_Usuario;
+          const tipo_usuario = results.ID_Tipo_usuario;
 
-        //Se establece que el usuario si esta registrado en la base de datos por lo tanto sera un usuario en linea (Online)
-        isOnline = true;
-        //Se genera el token
-        const token = jwt.sign({ id: id }, process.env.JWT_SECRET, {
-          expiresIn: "7d",
-        });
+          //se determina si el usuario es administrador o no
+          tipo_usuario === 1 ? (isAdmin = true) : (isAdmin = false);
 
-        const cookiesOptions = {
-          expires: new Date(
-            Date.now() +
-            parseInt(process.env.JWT_COOKIE_EXPIRES) * 24 * 60 * 60 * 1000
-          ),
-          httpOnly: true,
-        };
-        //Establecer la cookie con el nombre jwt el valor del token y las opciones de cookies
-        res.cookie("jwt", token, cookiesOptions);
+          //Se establece que el usuario si esta registrado en la base de datos por lo tanto sera un usuario en linea (Online)
+          isOnline = true;
+          //Se genera el token
+          const token = jwt.sign({ id: id }, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+          });
+
+          const cookiesOptions = {
+            expires: new Date(
+              Date.now() +
+              parseInt(process.env.JWT_COOKIE_EXPIRES) * 24 * 60 * 60 * 1000
+            ),
+            httpOnly: true,
+          };
+          //Establecer la cookie con el nombre jwt el valor del token y las opciones de cookies
+          res.cookie("jwt", token, cookiesOptions);
+        }
       }
     });
     res.json({
