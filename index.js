@@ -7,9 +7,9 @@ import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js"
 
 const app = express();
-
+/**FELIPE ME LA PELA */
 //para trabajar con las cookies
-app.use(cookieParser());
+app.use(cookieParser());git 
 
 //sirve para procesar los datos enviados desde los forms
 app.use(express.urlencoded({ extended: true }));
@@ -34,5 +34,5 @@ try {
 }
 
 app.listen(Config.port, () => {
-  console.log("server listening on port " + Config.port);
+  console.log("server listening on port: " + Config.port);
 });
