@@ -5,10 +5,10 @@ import { Config } from "./config/index.js";
 import db from "./database/db.js";
 import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js"
-
+import estacionRoute from "./routes/estacionRoute.js"
 const app = express();
 
-//para trabajar con las cookies
+//para trabajar con las cookies.
 app.use(cookieParser());
 
 //sirve para procesar los datos enviados desde los forms
@@ -24,7 +24,7 @@ app.use(cors(corsConfig));
 //routes
 app.use("/users", userRoute);
 app.use("/auth", authRoute);
-
+app.use("/estaciones", estacionRoute);
 //conexión a la base de datos
 try {
   await db.authenticate();
@@ -36,3 +36,5 @@ try {
 app.listen(Config.port, () => {
   console.log("server listening on port " + Config.port);
 });
+
+
