@@ -2,8 +2,8 @@ import nodemailer from "nodemailer"
 //email remitente
 const mail = {
 
-    user: "robert.runolfsdottir3@ethereal.email",
-    pass: "mBfUdSMCdDyUsRR2hf"
+    user: "norbert.berge84@ethereal.email",
+    pass: "KEf6WqcQzvJ6bSeBVn"
 
 }
 
@@ -38,6 +38,14 @@ export const getTemplate = (name, token) => {
     <h2>${name}</h2>
     <p>Confirma tu cuenta ingresando en el siguiente enlace</p>
     <a href="http://localhost:5000/users/confirm/${token}">Confirmar cuenta</a>
+    `
+}
+
+export const getTemplateCode = (name, codigo) => {
+    return `
+    <h2>Hola! ${name}</h2>
+    <p>Restablece tu contraseña ingresando el siguiente código</p>
+    <h2>${codigo}</h2>
     `
 }
 

@@ -2,7 +2,8 @@ import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import { promisify } from "util";
 import UserModel from "../models/UserModel.js";
-
+import random from "string-random"
+import { getTemplateCode, sendEmail } from "../config/mail.config.js"
 export const login = async (req, res) => {
   const password = req.body.password;
   const email = req.body.email
@@ -106,3 +107,51 @@ export const isAuthenticated = async (req, res, next) => {
     console.log("no esta autenticado");
   }
 };
+
+export const recoverAccount = async (req, res) => {
+
+  const email = req.body.email
+
+
+  //consultar si existe el correo recibido en la bd
+  try {
+
+    await UserModel.findOne({
+      where: {
+        Correo: email,
+      },
+    }).then(async (results) => {
+
+      if (!results) {
+        //si no existe el usuario enviar un mensaje "falso" de que el email se envio 
+        res.json({ message: "El email no existe" })
+        return
+      }
+
+      //si existe el correo crear código con string-random
+      let codigo = random(6)
+
+      //enviar el código al correo 
+
+      const template = getTemplateCode(results.nombre, codigo)
+      await sendEmail(email, "Email de código", template)
+
+      //enviar como respuesta el código al frontend para posteriormente compararlo con lo que escriba el usuario
+      res.json({ message: "El email existe", codigo })
+
+    })
+  } catch (error) {
+    console.log(error);
+  }
+
+
+
+
+
+
+
+
+
+
+
+}

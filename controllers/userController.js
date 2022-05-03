@@ -99,7 +99,7 @@ export const confirmAccount = async (req, res) => {
     //actualizar el status del usuario y redireccionar
     user.status = "verified"
 
-    console.log(user.dataValues);
+
     await UserModel.update(user.dataValues, {
       where: { ID_Usuario: user.ID_Usuario },
     });
