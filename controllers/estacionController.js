@@ -49,3 +49,14 @@ export const updateEstacion = async (req, res) => {
     res.json({ message: error.message });
   }
 };
+
+
+
+
+export const addImage = async (req, res) => {
+  try {
+    console.log(req.file);
+  } catch (error) {
+    console.log(error);
+  }
+}
