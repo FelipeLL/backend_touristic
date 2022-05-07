@@ -6,6 +6,10 @@ import db from "./database/db.js";
 import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js"
 import estacionRoute from "./routes/estacionRoute.js"
+import { fileURLToPath } from 'url';
+import path, { dirname } from "path"
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const app = express();
 
 //para trabajar con las cookies.
@@ -20,6 +24,7 @@ const corsConfig = {
   origin: true,
 };
 app.use(cors(corsConfig));
+app.use(express.static(path.join(__dirname, "dbimages")))
 
 //routes
 app.use("/users", userRoute);

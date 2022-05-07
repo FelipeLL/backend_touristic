@@ -73,7 +73,7 @@ export const readToken = async (req, res) => {
 
 export const logout = (req, res) => {
   res.clearCookie("jwt");
-  console.log("cookie borrada");
+  return res.json({ message: "logout exitoso" })
 };
 
 export const isAuthenticated = async (req, res, next) => {
