@@ -25,6 +25,7 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
+    console.log("ingresa");
     const password = req.body.password;
     const email = req.body.correo
 
@@ -39,7 +40,7 @@ export const createUser = async (req, res) => {
 
       res.json({ message: "El correo ya existe en la base de datos", emailExist: true })
     } else {
-
+      console.log("el email no existe");
       //se encripta la pass
       let passHash = await bcryptjs.hash(password, 8);
       const user = {
@@ -51,12 +52,13 @@ export const createUser = async (req, res) => {
         ID_Tipo_usuario: 2,
         status: "unverified"
       };
-
+      console.log(user);
 
       //generar token
-      const token = jwt.sign({ correo: email }, process.env.JWT_SECRET, {
-        expiresIn: "7d",
-      });
+      // const token = jwt.sign({ correo: email }, process.env.JWT_SECRET, {
+      //   expiresIn: "7d",
+      // });
+
 
       //obtener template
       //const template = getTemplate(req.body.nombre, token)
@@ -66,6 +68,7 @@ export const createUser = async (req, res) => {
 
       //crear user en la bd
       await UserModel.create(user);
+      console.log("se creo el usuario en la bd");
 
 
       res.json({ message: "Usuario insertado correctamente" });
