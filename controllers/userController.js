@@ -59,10 +59,10 @@ export const createUser = async (req, res) => {
       });
 
       //obtener template
-      const template = getTemplate(req.body.nombre, token)
+      //const template = getTemplate(req.body.nombre, token)
 
       //enviar email
-      await sendEmail(email, "Email de prueba 3", template)
+      //await sendEmail(email, "Email de prueba 3", template)
 
       //crear user en la bd
       await UserModel.create(user);
