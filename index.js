@@ -38,6 +38,10 @@ try {
   console.log("error a la BD: " + error);
 }
 
+app.get("/", (req, res) => {
+  res.json({ message: "active" })
+})
+
 app.listen(Config.port, () => {
   console.log("server listening on port " + Config.port);
 });
