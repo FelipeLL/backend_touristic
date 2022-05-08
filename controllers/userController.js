@@ -50,7 +50,7 @@ export const createUser = async (req, res) => {
         correo: email,
         password: passHash,
         ID_Tipo_usuario: 2,
-        status: "unverified"
+
       };
       console.log(user);
 
