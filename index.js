@@ -21,7 +21,7 @@ app.use(express.json());
 
 const corsConfig = {
   credentials: true,
-  origin: true,
+  origin: "https://zoratamamap.herokuapp.com/",
 };
 app.use(cors(corsConfig));
 app.use(express.static(path.join(__dirname, "dbimages")))
