@@ -21,9 +21,23 @@ app.use(express.json());
 
 const corsConfig = {
   credentials: true,
-  origin: "https://zoratamamap.herokuapp.com/",
+  origin: "https://bespoke-zabaione-6e591a.netlify.app/",
 };
 app.use(cors(corsConfig));
+
+app.use(function (req, res, next) {
+
+  res.setHeader('Access-Control-Allow-Origin', 'https://mern-bug-tracker.netlify.app');
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  next();
+});
+
 app.use(express.static(path.join(__dirname, "dbimages")))
 
 //routes
