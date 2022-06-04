@@ -21,8 +21,7 @@ app.use(express.json());
 
 const corsConfig = {
   credentials: true,
-  origin: 'https://bespoke-zabaione-6e591a.netlify.app',
-
+  origin: true,
 };
 app.use(cors(corsConfig));
 
