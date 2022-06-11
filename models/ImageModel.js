@@ -10,6 +10,7 @@ const ImageModel = db.define(
         type: { type: DataTypes.STRING },
         name: { type: DataTypes.STRING },
         data: { type: DataTypes.BLOB },
+        url: { type: DataTypes.STRING },
 
     },
     {

@@ -27,7 +27,7 @@ app.use(cors(corsConfig));
 
 
 
-app.use(express.static(path.join(__dirname, "dbimages")))
+app.use(express.static(path.join(__dirname, "publicImages")))
 
 //routes
 app.use("/users", userRoute);
