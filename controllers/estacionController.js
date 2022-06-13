@@ -130,16 +130,31 @@ export const getImage = async (req, res) => {
   //lee cada imagen y la guarda para enviarla al frontend
   // const imagedir = fs.readdirSync(path.join(__dirname, `../publicImages/${req.params.id}`))
 
+  const imagenes = {
 
-  const urlImages = []
+    id: images.map(image => {
+      return image.ID_Imagen
+    })
+    ,
 
-  images.map(image => {
-    urlImages.push(image.url)
-  })
+    url: images.map(image => {
+      return image.url
+    }),
 
+  }
 
+  res.json(imagenes)
 
-  res.json(urlImages)
+}
 
+export const deleteImage = async (req, res) => {
+  try {
+    await ImageModel.destroy({
+      where: { ID_Imagen: req.params.id }
+    })
+    res.json({ message: "Imagen eliminada correctamente" });
+  } catch (error) {
+    res.json({ message: error.message });
+  }
 }
 

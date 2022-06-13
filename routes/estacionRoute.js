@@ -9,6 +9,7 @@ import {
     updateEstacion,
     addImage,
     getImage,
+    deleteImage
 
 } from "../controllers/estacionController.js";
 
@@ -37,5 +38,7 @@ router.delete("/:id", deleteEstacion);
 router.put("/:id", updateEstacion);
 router.post("/image/:id", fileUpload, addImage)
 router.get("/image/:id", getImage)
+router.delete("/image/:id", deleteImage)
+
 
 export default router;
