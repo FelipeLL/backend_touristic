@@ -6,11 +6,12 @@ import random from "string-random"
 import { getTemplateCode, sendEmail } from "../config/mail.config.js"
 export const login = async (req, res) => {
   const password = req.body.password;
-  const email = req.body.email
   let isOnline = null;
   let isAdmin = false;
 
   try {
+
+    //se busca el correo del usuario
     await UserModel.findOne({
       where: {
         Correo: req.body.email,
@@ -24,8 +25,12 @@ export const login = async (req, res) => {
       ) {
         console.log("Email y/o contraseña incorrectos");
         isOnline = null;
+        return res.status(401).json({
+          message: "El correo electrónico y/o contraseña son incorrectos",
+          isOnline: isOnline,
+        });
       } else {
-
+        //si la contraseña es correcta entonces ...
 
         const id = results.ID_Usuario;
         const tipo_usuario = results.ID_Tipo_usuario;
@@ -36,7 +41,7 @@ export const login = async (req, res) => {
         //Se establece que el usuario si esta registrado en la base de datos por lo tanto sera un usuario en linea (Online)
         isOnline = true;
         //Se genera el token
-        const token = jwt.sign({ id: id }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ id: id, isAdmin: isAdmin }, process.env.JWT_SECRET, {
           expiresIn: "7d",
         });
 
@@ -50,20 +55,36 @@ export const login = async (req, res) => {
         //Establecer la cookie con el nombre jwt el valor del token y las opciones de cookies
         res.cookie("jwt", token, cookiesOptions);
 
+
+        res.json({
+          isAdmin: isAdmin,
+          isOnline: isOnline,
+        })
       }
     });
-    res.json({
-      isAdmin: isAdmin,
-      isOnline: isOnline,
-    });
+
   } catch (error) {
     console.log(error);
   }
 };
 
 export const readToken = async (req, res) => {
+
   if (req.cookies.jwt) {
-    res.json({ isToken: true });
+    try {
+      const decodificada = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+
+      res.json({
+        isToken: true,
+        isAdmin: decodificada.isAdmin
+      });
+    } catch (error) {
+      console.log(error);
+    }
   } else {
     res.json({ isToken: false });
   }

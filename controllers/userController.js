@@ -25,7 +25,7 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    console.log("ingresa");
+
     const password = req.body.password;
     const email = req.body.correo
 
@@ -38,9 +38,9 @@ export const createUser = async (req, res) => {
     })
     if (verifyEmailExist !== null) {
 
-      res.json({ message: "El correo ya existe en la base de datos", emailExist: true })
+      res.status(400).json({ message: "El correo ya se encuentra registrado", emailExist: true })
     } else {
-      console.log("el email no existe");
+
       //se encripta la pass
       let passHash = await bcryptjs.hash(password, 8);
       const user = {
