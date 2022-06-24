@@ -9,6 +9,7 @@ export const login = async (req, res) => {
   let isOnline = null;
   let isAdmin = false;
 
+
   try {
 
     //se busca el correo del usuario
