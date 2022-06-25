@@ -21,7 +21,7 @@ app.use(express.json());
 
 const corsConfig = {
   credentials: true,
-  origin: ['http://localhost:3000'],
+  origin: ['https://zoratama-map.netlify.app'],
 };
 app.use(cors(corsConfig));
 
