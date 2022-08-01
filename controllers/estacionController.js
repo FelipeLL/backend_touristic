@@ -91,6 +91,8 @@ export const addImage = async (req, res) => {
       data,
       url
     }
+    console.log(req.file);
+    console.log(image);
     await ImageModel.create(image)
     res.json({ message: "Imagen insertada correctamente" })
 
@@ -101,7 +103,6 @@ export const addImage = async (req, res) => {
 
 export const getImage = async (req, res) => {
   //const images = await ImageModel.findAll()
-  console.log(req.params.id);
   if (req.params.id === "0") {
 
     return
