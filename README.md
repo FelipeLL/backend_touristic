@@ -22,12 +22,12 @@ Para iniciar el proyecto es necesario contar con la instalación de las siguient
 * Node.JS 
 
   * Version: v10.16.3 (o superior)
-  * Installation: https://nodejs.org/es/download/
+  * Instalación: https://nodejs.org/es/download/
 
 * NPM 
 
   * Version: v6.14.5 (o superior)
-  * Installation: installs together with Node.js
+  * Instalación: installs together with Node.js
 
 
 
