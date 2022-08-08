@@ -1,6 +1,7 @@
 import EstacionModel from "../models/EstacionModel.js";
 import ImageModel from "../models/ImageModel.js";
 import fs from "fs"
+import validator from "validator";
 import multer from "multer"
 import { fileURLToPath } from 'url';
 import path, { dirname } from "path"
@@ -24,8 +25,14 @@ export const createEstacion = async (req, res) => {
       descripcion: req.body.descripcion,
       longitud: req.body.longitud,
       latitud: req.body.latitud,
-
     };
+
+    if (validator.isFloat(estacion.longitud) === false || validator.isFloat(estacion.latitud) === false) {
+      return res.status(400).send("La longitud/latitud debe ser un número")
+    }
+
+
+
     await EstacionModel.create(estacion);
     res.json({ message: "estación creada con exito" })
   } catch (error) {
