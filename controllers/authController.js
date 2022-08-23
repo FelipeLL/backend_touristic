@@ -1,102 +1,38 @@
-import jwt from "jsonwebtoken";
-import bcryptjs from "bcryptjs";
-import { promisify } from "util";
-import UserModel from "../models/UserModel.js";
-import random from "string-random"
-import { getTemplateCode, sendEmail } from "../config/mail.config.js"
-export const login = async (req, res) => {
-  const password = req.body.password;
-  let isOnline = null;
-  let isAdmin = false;
+import { login, read } from "../services/authService.js"
 
-
+export const loginUser = async (req, res) => {
   try {
-
-    //se busca el correo del usuario
-    await UserModel.findOne({
-      where: {
-        Correo: req.body.email,
-      },
-    }).then(async (results) => {
-
-      //Si el correo ingresado no existe en la base de datos O si la password es incorrecta
-      if (
-        results === null ||
-        !(await bcryptjs.compare(password, results.password))
-      ) {
-        console.log("Email y/o contraseña incorrectos");
-        isOnline = null;
-        return res.status(401).json({
-          message: "El correo electrónico y/o contraseña son incorrectos",
-          isOnline: isOnline,
-        });
-      } else {
-        //si la contraseña es correcta entonces ...
-
-        const id = results.ID_Usuario;
-        const tipo_usuario = results.ID_Tipo_usuario;
-
-        //se determina si el usuario es administrador o no
-        tipo_usuario === 1 ? (isAdmin = true) : (isAdmin = false);
-
-        //Se establece que el usuario si esta registrado en la base de datos por lo tanto sera un usuario en linea (Online)
-        isOnline = true;
-        //Se genera el token
-        const token = jwt.sign({ id: id, isAdmin: isAdmin }, process.env.JWT_SECRET, {
-          expiresIn: "7d",
-        });
-
-        const cookiesOptions = {
-          expires: new Date(
-            Date.now() +
-            parseInt(process.env.JWT_COOKIE_EXPIRES) * 24 * 60 * 60 * 1000
-          ),
-          httpOnly: true,
-        };
-        //Establecer la cookie con el nombre jwt el valor del token y las opciones de cookies
-        res.cookie("jwt", token, cookiesOptions);
-
-
-        res.json({
-          isAdmin: isAdmin,
-          isOnline: isOnline,
-        })
-      }
-    });
+    let results = await login(req.body.email, req.body.password);
+    res.cookie("jwt", results.token, results.cookiesOptions)
+    res.json({ results })
 
   } catch (error) {
-    console.log(error);
+    res.status(400).send(error)
   }
-};
+
+}
 
 export const readToken = async (req, res) => {
 
-  if (req.cookies.jwt) {
-    try {
-      const decodificada = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRET
-      );
-
-
-      res.json({
-        isToken: true,
-        isAdmin: decodificada.isAdmin
-      });
-    } catch (error) {
-      console.log(error);
+  try {
+    if (req.cookies.jwt) {
+      let results = await read(req.cookies.jwt)
+      res.json(results);
+    } else {
+      res.json({ isToken: false });
     }
-  } else {
-    res.json({ isToken: false });
+  } catch (error) {
+    res.status(500).send(error)
   }
+
 };
 
 export const logout = (req, res) => {
   res.clearCookie("jwt");
-  return res.json({ message: "logout exitoso" })
+  res.json({ message: "logout exitoso" })
 };
 
-export const isAuthenticated = async (req, res, next) => {
+/* export const isAuthenticated = async (req, res, next) => {
   //se llama a las cookies, el jwt es porque asi definimos que se llamaria la misma cookie
 
   //si la cookie existe entonces entra al if
@@ -126,9 +62,9 @@ export const isAuthenticated = async (req, res, next) => {
   } else {
     console.log("no esta autenticado");
   }
-};
+}; */
 
-export const recoverAccount = async (req, res) => {
+/* export const recoverAccount = async (req, res) => {
 
   const email = req.body.email
 
@@ -174,4 +110,4 @@ export const recoverAccount = async (req, res) => {
 
 
 
-}
+} */

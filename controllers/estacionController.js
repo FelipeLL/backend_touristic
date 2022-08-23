@@ -1,12 +1,6 @@
 import EstacionModel from "../models/EstacionModel.js";
 import ImageModel from "../models/ImageModel.js";
-import fs from "fs"
 import validator from "validator";
-import multer from "multer"
-import { fileURLToPath } from 'url';
-import path, { dirname } from "path"
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 export const getAllEstaciones = async (req, res) => {
   try {
@@ -68,40 +62,9 @@ export const updateEstacion = async (req, res) => {
 
 export const addImage = async (req, res) => {
   try {
-    //console.log(req.file);
-    const data = fs.readFileSync(path.join(__dirname, "../images/" + req.file.filename))
-    const name = req.file.originalname
-    const type = req.file.mimetype
 
-
-    //verifica si la carpeta con el id de la estación ya existe o no
-    if (fs.existsSync(path.join(__dirname, `../publicImages`, req.params.id))) {
-      console.log("la carpeta ya existe");
-    } else {
-      fs.mkdir(path.join(__dirname, `../publicImages`, req.params.id), function (err) {
-        if (err) { throw (err) }
-        console.log("La carpeta ha sido creada");
-      })
-    }
-    const url = `http://localhost:5000/${req.params.id}/` + Date.now() + "-ruta.png"
-
-
-
-
-    //se crea el archivo en la carpeta publicImages en su respectivo número de estación
-    fs.writeFileSync(path.join(__dirname, `../publicImages/${req.params.id}/` + Date.now() + "-ruta.png"), data)
-
-    const image = {
-      ID_Estacion: req.params.id,
-      type,
-      name,
-      data,
-      url
-    }
-    console.log(req.file);
-    console.log(image);
-    await ImageModel.create(image)
-    res.json({ message: "Imagen insertada correctamente" })
+    // await ImageModel.create(image)
+    // res.json({ message: "Imagen insertada correctamente" })
 
   } catch (error) {
     console.log(error);
