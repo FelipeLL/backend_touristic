@@ -1,64 +1,45 @@
 import EstacionModel from "../models/EstacionModel.js";
 import ImageModel from "../models/ImageModel.js";
-import validator from "validator";
+import { getAll, create, deleteOne, update } from "../services/estacionService.js";
 
 export const getAllEstaciones = async (req, res) => {
   try {
-    const estaciones = await EstacionModel.findAll();
-    res.json(estaciones);
+    let results = await getAll()
+    res.json(results)
   } catch (error) {
-    res.json({ message: error.message });
-  }
-};
-
-export const createEstacion = async (req, res) => {
-  try {
-
-    const estacion = {
-      nombre: req.body.nombre,
-      descripcion: req.body.descripcion,
-      longitud: req.body.longitud,
-      latitud: req.body.latitud,
-    };
-
-    if (validator.isFloat(estacion.longitud) === false || validator.isFloat(estacion.latitud) === false) {
-      return res.status(400).send("La longitud/latitud debe ser un número")
-    }
-
-
-
-    await EstacionModel.create(estacion);
-    res.json({ message: "estación creada con exito" })
-  } catch (error) {
-    res.json({ message: error.message });
+    res.status(500).json({ error: error })
   }
 }
 
+export const createEstacion = async (req, res) => {
+  try {
+    let results = await create(req.body.nombre, req.body.descripcion, req.body.longitud, req.body.latitud)
+    res.json(results)
+  } catch (error) {
+    res.status(400).json({ error: error })
+
+  }
+}
 export const deleteEstacion = async (req, res) => {
   try {
 
-    await EstacionModel.destroy({
-      where: { ID_Estacion: req.params.id },
-    });
-    res.json({ message: "Estación eliminada correctamente" });
+    let results = await deleteOne(req.params.id)
+    res.json(results)
   } catch (error) {
-    res.json({ message: error.message });
+    res.status(400).json({ error: error })
   }
 };
-
 
 export const updateEstacion = async (req, res) => {
   try {
 
-    await EstacionModel.update(req.body, {
-      where: { ID_Estacion: req.params.id },
-    });
-    res.json({ message: "Estación actualizada correctamente" });
+    let results = await update(req.body.nombre, req.body.descripcion, req.body.longitud, req.body.latitud, req.params.id)
+    res.json(results)
+
   } catch (error) {
-    res.json({ message: error.message });
+    res.status(400).json({ error: error })
   }
 };
-
 
 export const addImage = async (req, res) => {
   try {
