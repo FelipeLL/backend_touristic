@@ -7,9 +7,8 @@ const ImageModel = db.define(
     {
         ID_Imagen: { type: DataTypes.INTEGER, primaryKey: true },
         ID_Estacion: { type: DataTypes.INTEGER, primaryKey: true },
-        type: { type: DataTypes.STRING },
+        etag: { type: DataTypes.STRING },
         name: { type: DataTypes.STRING },
-        data: { type: DataTypes.BLOB },
         url: { type: DataTypes.STRING },
 
     },

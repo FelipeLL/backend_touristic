@@ -1,4 +1,5 @@
 import express from "express";
+import fileUpload from "express-fileupload";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { Config } from "./config/index.js";
@@ -6,10 +7,9 @@ import db from "./database/db.js";
 import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js"
 import estacionRoute from "./routes/estacionRoute.js"
-import { fileURLToPath } from 'url';
-import path, { dirname } from "path"
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import imageRoute from "./routes/imageRoute.js"
+
+
 const app = express();
 
 //para trabajar con las cookies.
@@ -19,6 +19,11 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+//carpeta temporal donde se van a estar "temporalmente" los archivos que se suben
+app.use(fileUpload({
+  tempFileDir: "/temp"
+}))
+
 const corsConfig = {
   credentials: true,
   origin: ['http://localhost:3000'],
@@ -26,13 +31,11 @@ const corsConfig = {
 app.use(cors(corsConfig));
 
 
-
-app.use(express.static(path.join(__dirname, "publicImages")))
-
 //routes
 app.use("/users", userRoute);
 app.use("/auth", authRoute);
 app.use("/estaciones", estacionRoute);
+app.use("/images", imageRoute);
 //conexión a la base de datos
 try {
   await db.authenticate();

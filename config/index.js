@@ -6,5 +6,7 @@ export const Config = {
   username: process.env.DB_USERNAME,
   password: process.env.PASSWORD,
   jwtSecret: process.env.JWT_SECRET,
-  cookiesExpire: process.env.JWT_COOKIE_EXPIRES
+  cookiesExpire: process.env.JWT_COOKIE_EXPIRES,
+  bucketName: process.env.BUCKET_NAME,
+  endpoint: process.env.ENDPOINT,
 };

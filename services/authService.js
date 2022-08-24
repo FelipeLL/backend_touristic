@@ -18,11 +18,11 @@ export const login = async (email, password) => {
 
         isOnline = true;
 
-        const token = await getToken(existEmail.ID_Usuario)
+        const token = await getToken(existEmail.ID_Usuario, isAdmin)
         const cookiesOptions = {
             expires: new Date(
                 Date.now() +
-                parseInt(Config.jwtCookieExpire) * 24 * 60 * 60 * 1000
+                parseInt(Config.cookiesExpire) * 24 * 60 * 60 * 1000
             ),
             httpOnly: true,
         };
@@ -38,6 +38,7 @@ export const read = async (token) => {
         token,
         Config.jwtSecret,
     );
+
     return { isAdmin: decodify.isAdmin, isToken: true, idUser: decodify.id }
 
 }
