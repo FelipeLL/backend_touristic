@@ -11,7 +11,7 @@ export const login = async (email, password) => {
     let existEmail = await verifyEmailExist(email)
 
     if (existEmail === null || !(await comparePassword(password, existEmail.password))) {
-        throw "Email/password are incorrect"
+        throw "El correo y/o contraseña son incorrectos"
     } else {
         const typeUser = existEmail.ID_Tipo_usuario;
         typeUser === 1 ? (isAdmin = true) : (isAdmin = false);
