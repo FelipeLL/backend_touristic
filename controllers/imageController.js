@@ -1,5 +1,4 @@
 import { add, getAll, remove } from "../services/imageService.js"
-import { Config } from "../config/index.js"
 
 
 
@@ -26,10 +25,10 @@ export const getAllImages = async (req, res) => {
 
 export const removeImage = async (req, res) => {
     try {
-        console.log(Config.bucketName);
-        //let results = await remove(req.params.id, req.body.name)
+        console.log("b");
+        let results = await remove(req.params.id, req.body.name)
 
-        res.send("results")
+        res.json(results)
     } catch (error) {
         res.status(400).send(error)
     }
