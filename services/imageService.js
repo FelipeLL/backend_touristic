@@ -10,8 +10,8 @@ const s3 = new aws.S3({
 
 aws.config.update({
     region: "us-east-1",
-    aws_access_key_id: process.env.aws_access_key_id,
-    aws_secret_access_key: process.env.aws_secret_access_key,
+    aws_access_key_id: Config.awsAccessKeyId,
+    aws_secret_access_key: Config.awsSecretAccessKey,
 
 });
 
