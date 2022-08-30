@@ -25,6 +25,7 @@ export const add = async (file, idEstacion) => {
         Key: name
 
     }).promise()
+    console.log("pruebas para agregar imagen x2");
 
     const urlImage = `https://${Config.bucketName}.${Config.endpoint}/${name}`
 
