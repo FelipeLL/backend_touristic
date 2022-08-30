@@ -8,12 +8,12 @@ const s3 = new aws.S3({
     endpoint: spacesEndpoint
 })
 
-/* aws.config.update({
+aws.config.update({
     region: "us-east-1",
-    aws_access_key_id: Config.awsAccessKeyId,
-    aws_secret_access_key: Config.awsSecretAccessKey,
+    aws_access_key_id: "DO00777QTTJEPLXADY3U",
+    aws_secret_access_key: "uUoeKQoy0vy0SzDZdnbA/R2bWGnsLqEr75uAweQ+XrQ",
 
-}); */
+});
 
 export const add = async (file, idEstacion) => {
 
