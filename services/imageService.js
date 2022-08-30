@@ -4,24 +4,17 @@ import { addImage, getAllImages, removeImage } from "../Dao/imageDao.js"
 
 const spacesEndpoint = new aws.Endpoint(Config.endpoint)
 
-/* aws.config.update({
-    region: "us-east-1",
-    aws_access_key_id: "DO00777QTTJEPLXADY3U",
-    aws_secret_access_key: "uUoeKQoy0vy0SzDZdnbA/R2bWGnsLqEr75uAweQ+XrQ",
 
-}); */
 const s3 = new aws.S3({
     endpoint: spacesEndpoint,
     credentials: {
-        accessKeyId: "DO00777QTTJEPLXADY3U", // Access key pair. You can create access key pairs using the control panel or API.
-        secretAccessKey: "uUoeKQoy0vy0SzDZdnbA/R2bWGnsLqEr75uAweQ+XrQ"// Secret access key defined through an environment variable.
+        accessKeyId: Config.awsAccessKeyId,
+        secretAccessKey: Config.awsSecretAccessKey,
     }
 })
 
 
 export const add = async (file, idEstacion) => {
-    console.log("pruebas para agregar imagen");
-    console.log(Config.bucketName);
     const name = file.name.split(' ').join('')
     const uploadObject = await s3.putObject({
         ACL: "public-read",
@@ -30,7 +23,6 @@ export const add = async (file, idEstacion) => {
         Key: name
 
     }).promise()
-    console.log("pruebas para agregar imagen x2");
 
     const urlImage = `https://${Config.bucketName}.${Config.endpoint}/${name}`
 
