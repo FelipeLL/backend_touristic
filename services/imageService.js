@@ -4,16 +4,16 @@ import { addImage, getAllImages, removeImage } from "../Dao/imageDao.js"
 
 const spacesEndpoint = new aws.Endpoint(Config.endpoint)
 
-const s3 = new aws.S3({
-    endpoint: spacesEndpoint
-})
-
 aws.config.update({
     region: "us-east-1",
     aws_access_key_id: "DO00777QTTJEPLXADY3U",
     aws_secret_access_key: "uUoeKQoy0vy0SzDZdnbA/R2bWGnsLqEr75uAweQ+XrQ",
 
 });
+const s3 = new aws.S3({
+    endpoint: spacesEndpoint
+})
+
 
 export const add = async (file, idEstacion) => {
 
