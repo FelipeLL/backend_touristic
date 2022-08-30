@@ -4,14 +4,18 @@ import { addImage, getAllImages, removeImage } from "../Dao/imageDao.js"
 
 const spacesEndpoint = new aws.Endpoint(Config.endpoint)
 
-aws.config.update({
+/* aws.config.update({
     region: "us-east-1",
     aws_access_key_id: "DO00777QTTJEPLXADY3U",
     aws_secret_access_key: "uUoeKQoy0vy0SzDZdnbA/R2bWGnsLqEr75uAweQ+XrQ",
 
-});
+}); */
 const s3 = new aws.S3({
-    endpoint: spacesEndpoint
+    endpoint: spacesEndpoint,
+    credentials: {
+        accessKeyId: "DO00777QTTJEPLXADY3U", // Access key pair. You can create access key pairs using the control panel or API.
+        secretAccessKey: "uUoeKQoy0vy0SzDZdnbA/R2bWGnsLqEr75uAweQ+XrQ"// Secret access key defined through an environment variable.
+    }
 })
 
 
