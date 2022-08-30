@@ -17,6 +17,7 @@ const s3 = new aws.S3({
 
 export const add = async (file, idEstacion) => {
     console.log("pruebas para agregar imagen");
+    console.log(Config.bucketName);
     const name = file.name.split(' ').join('')
     const uploadObject = await s3.putObject({
         ACL: "public-read",
