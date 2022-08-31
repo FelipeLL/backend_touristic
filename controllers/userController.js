@@ -1,4 +1,4 @@
-import { getAll, create, update, remove } from "../services/userService.js"
+import { getAll, getOne, create, update, remove } from "../services/userService.js"
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -8,6 +8,15 @@ export const getAllUsers = async (req, res) => {
     res.status(500).json({ error: error })
   }
 };
+
+export const getUser = async (req, res) => {
+  try {
+    let user = await getOne(req.params.id)
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error })
+  }
+}
 
 export const createUser = async (req, res) => {
   try {

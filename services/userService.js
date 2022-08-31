@@ -1,8 +1,12 @@
-import { getAllUsers, verifyEmailExist, createNewUser, updateUser, removeUser } from "../Dao/userDao.js"
+import { getAllUsers, getUser, verifyEmailExist, createNewUser, updateUser, removeUser } from "../Dao/userDao.js"
 import { hashPassword } from "../utils/hash.js"
 
 export const getAll = async () => {
     return await getAllUsers()
+}
+
+export const getOne = async (id) => {
+    return await getUser(id)
 }
 
 export const create = async (name, lastname, phone, email, password) => {
