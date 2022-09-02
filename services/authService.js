@@ -9,7 +9,6 @@ export const login = async (email, password) => {
     let isOnline = null;
     let isAdmin = false;
     let existEmail = await verifyEmailExist(email)
-
     if (existEmail === null || !(await comparePassword(password, existEmail.password))) {
         throw "El correo y/o contraseña son incorrectos"
     } else {

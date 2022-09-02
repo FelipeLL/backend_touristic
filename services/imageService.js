@@ -13,7 +13,6 @@ const s3 = new aws.S3({
     }
 })
 
-
 export const add = async (file, idEstacion) => {
     const name = file.name.split(' ').join('')
     const uploadObject = await s3.putObject({

@@ -1,10 +1,17 @@
 import UserModel from "../models/UserModel.js"
 
 export const getAllUsers = async () => {
-
     let results = await UserModel.findAll()
     return results
+}
 
+export const getUser = async (id) => {
+    let results = await UserModel.findAll({
+        where: {
+            ID_Usuario: id
+        }
+    })
+    return results
 }
 
 export const createNewUser = async (user) => {
@@ -26,6 +33,13 @@ export const updateUser = async (user, id) => {
         where: { ID_usuario: id }
     })
     return { message: "Usuario actualizado correctamente" }
+}
+
+export const updatePassword = async (user, id) => {
+    await UserModel.update(user, {
+        where: { ID_usuario: id }
+    })
+    return { message: "Contraseña actualizada correctamente" }
 }
 
 export const removeUser = async (id) => {

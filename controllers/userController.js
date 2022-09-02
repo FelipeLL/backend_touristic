@@ -1,4 +1,4 @@
-import { getAll, create, update, remove } from "../services/userService.js"
+import { getAll, getOne, create, update, updatePass, remove } from "../services/userService.js"
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -8,6 +8,15 @@ export const getAllUsers = async (req, res) => {
     res.status(500).json({ error: error })
   }
 };
+
+export const getUser = async (req, res) => {
+  try {
+    let user = await getOne(req.params.id)
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error })
+  }
+}
 
 export const createUser = async (req, res) => {
   try {
@@ -20,10 +29,19 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    let results = await update(req.body.nombre, req.body.apellido, req.body.telefono, req.params.id);
+    let results = await update(req.body.nombre, req.body.apellido, req.body.telefono, req.body.correo, req.params.id);
     res.json({ results })
   } catch (error) {
     res.json({ message: error.message });
+  }
+}
+
+export const updatePassword = async (req, res) => {
+  try {
+    let results = await updatePass(req.body.currentPassword, req.body.newPassword, req.params.id);
+    res.json({ results })
+  } catch (error) {
+    res.status(400).send(error)
   }
 }
 
