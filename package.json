@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "heroku-postbuild": "cd ../ && cd frontend && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "keywords": [],
   "author": "",
