@@ -1,5 +1,5 @@
-import { getAllUsers, getUser, verifyEmailExist, createNewUser, updateUser, removeUser } from "../Dao/userDao.js"
-import { hashPassword } from "../utils/hash.js"
+import { getAllUsers, getUser, verifyEmailExist, createNewUser, updateUser, updatePassword, removeUser, } from "../Dao/userDao.js"
+import { hashPassword, comparePassword } from "../utils/hash.js"
 
 export const getAll = async () => {
     return await getAllUsers()
@@ -27,14 +27,29 @@ export const create = async (name, lastname, phone, email, password) => {
     }
 }
 
-export const update = async (name, lastname, phone, id) => {
+export const update = async (name, lastname, phone, email, id) => {
     const user = {
         nombre: name,
         apellido: lastname,
         telefono: phone,
-
+        correo: email
     }
     return await updateUser(user, id)
+}
+
+export const updatePass = async (currentPass, newPass, id,) => {
+    const user = await getOne(id)
+    const results = await comparePassword(currentPass, user[0].password)
+
+    if (results) {
+        const passHash = await hashPassword(newPass)
+        const user = {
+            password: passHash
+        }
+        return await updatePassword(user, id)
+    } else {
+        throw "La contraseña actual es incorrecta"
+    }
 }
 
 export const remove = async (id) => {

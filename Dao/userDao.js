@@ -35,6 +35,13 @@ export const updateUser = async (user, id) => {
     return { message: "Usuario actualizado correctamente" }
 }
 
+export const updatePassword = async (user, id) => {
+    await UserModel.update(user, {
+        where: { ID_usuario: id }
+    })
+    return { message: "Contraseña actualizada correctamente" }
+}
+
 export const removeUser = async (id) => {
 
     await UserModel.destroy({
