@@ -3,6 +3,7 @@ import { login, read } from "../services/authService.js"
 export const loginUser = async (req, res) => {
   try {
     let results = await login(req.body.email, req.body.password);
+    console.log(results);
     res.cookie("jwt", results.token, results.cookiesOptions)
     res.json({ results })
 
