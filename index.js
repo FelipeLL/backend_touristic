@@ -26,16 +26,16 @@ app.use(fileUpload({
 
 const corsConfig = {
   credentials: true,
-  origin: ['https://zoratama-map.netlify.app', "https://zoratamafront.herokuapp.com", "https://zoratamamap.herokuapp.com"],
+  origin: ['https://zoratama-map.netlify.app'],
 };
 app.use(cors(corsConfig));
 
 
 //routes
-app.use("/users", userRoute);
-app.use("/auth", authRoute);
-app.use("/estaciones", estacionRoute);
-app.use("/images", imageRoute);
+app.use("/api/users", userRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/estaciones", estacionRoute);
+app.use("/api/images", imageRoute);
 //conexión a la base de datos
 try {
   await db.authenticate();
@@ -47,15 +47,6 @@ try {
 app.get("/", (req, res) => {
   res.json({ message: "active" })
 })
-
-/* if (process.env.NODE_ENV === 'production') {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  // Handle React routing, return all requests to React app
-  app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
-} */
 
 app.listen(Config.port, () => {
   console.log("server listening on port " + Config.port);
