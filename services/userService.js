@@ -9,7 +9,7 @@ export const getOne = async (id) => {
     return await getUser(id)
 }
 
-export const create = async (name, lastname, phone, email, password) => {
+export const create = async (name, email, password) => {
     let existEmail = await verifyEmailExist(email)
     if (existEmail !== null) {
         throw "El correo ingresado ya existe"
@@ -17,8 +17,6 @@ export const create = async (name, lastname, phone, email, password) => {
         const passHash = await hashPassword(password)
         const user = {
             nombre: name,
-            apellido: lastname,
-            telefono: phone,
             correo: email,
             password: passHash,
             ID_Tipo_usuario: 2,
@@ -27,11 +25,9 @@ export const create = async (name, lastname, phone, email, password) => {
     }
 }
 
-export const update = async (name, lastname, phone, email, id) => {
+export const update = async (name, email, id) => {
     const user = {
         nombre: name,
-        apellido: lastname,
-        telefono: phone,
         correo: email
     }
     return await updateUser(user, id)

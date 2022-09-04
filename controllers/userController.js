@@ -20,7 +20,7 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    let results = await create(req.body.nombre, req.body.apellido, req.body.telefono, req.body.correo, req.body.password)
+    let results = await create(req.body.nombre, req.body.correo, req.body.password)
     res.json({ results })
   } catch (error) {
     res.status(400).send(error)
@@ -29,7 +29,7 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    let results = await update(req.body.nombre, req.body.apellido, req.body.telefono, req.body.correo, req.params.id);
+    let results = await update(req.body.nombre, req.body.correo, req.params.id);
     res.json({ results })
   } catch (error) {
     res.json({ message: error.message });

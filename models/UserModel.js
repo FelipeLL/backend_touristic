@@ -7,8 +7,6 @@ const UserModel = db.define(
   {
     ID_Usuario: { type: DataTypes.INTEGER, primaryKey: true },
     nombre: { type: DataTypes.STRING },
-    apellido: { type: DataTypes.STRING },
-    telefono: { type: DataTypes.STRING },
     correo: { type: DataTypes.STRING },
     password: { type: DataTypes.STRING },
     fotografia: { type: DataTypes.BLOB },
