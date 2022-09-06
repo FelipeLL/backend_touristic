@@ -51,3 +51,11 @@ export const removeUser = async (id) => {
     return { message: "Usuario eliminado correctamente" }
 
 }
+
+export const updateImageProfile = async (user, idUser) => {
+    await UserModel.update(user, {
+        where: { ID_Usuario: idUser }
+    })
+
+    return { message: "Imagen actualizada correctamente" }
+}

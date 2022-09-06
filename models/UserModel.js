@@ -9,7 +9,7 @@ const UserModel = db.define(
     nombre: { type: DataTypes.STRING },
     correo: { type: DataTypes.STRING },
     password: { type: DataTypes.STRING },
-    fotografia: { type: DataTypes.BLOB },
+    fotografia: { type: DataTypes.STRING },
     ID_Tipo_usuario: { type: DataTypes.INTEGER },
 
   },

@@ -1,5 +1,17 @@
-import { getAllUsers, getUser, verifyEmailExist, createNewUser, updateUser, updatePassword, removeUser, } from "../Dao/userDao.js"
+import aws from "aws-sdk"
+import { Config } from "../config/index.js"
+import { getAllUsers, getUser, verifyEmailExist, createNewUser, updateUser, updatePassword, removeUser, updateImageProfile } from "../Dao/userDao.js"
 import { hashPassword, comparePassword } from "../utils/hash.js"
+
+const spacesEndpoint = new aws.Endpoint(Config.endpoint)
+
+const s3 = new aws.S3({
+    endpoint: spacesEndpoint,
+    credentials: {
+        accessKeyId: Config.awsAccessKeyId,
+        secretAccessKey: Config.awsSecretAccessKey,
+    }
+})
 
 export const getAll = async () => {
     return await getAllUsers()
@@ -19,6 +31,7 @@ export const create = async (name, email, password) => {
             nombre: name,
             correo: email,
             password: passHash,
+            fotografia: "https://zoratamagallery.sfo3.digitaloceanspaces.com/perfil.webp",
             ID_Tipo_usuario: 2,
         };
         return await createNewUser(user)
@@ -52,3 +65,21 @@ export const remove = async (id) => {
     return await removeUser(id)
 }
 
+export const updateImgProfile = async (file, idUser) => {
+    const name = file.name.split(' ').join('')
+    const uploadObject = await s3.putObject({
+        ACL: "public-read",
+        Bucket: Config.bucketName,
+        Body: file.data,
+        Key: name
+
+    }).promise()
+
+    const urlImage = `https://${Config.bucketName}.${Config.endpoint}/${name}`
+
+    const user = {
+        fotografia: urlImage
+    }
+
+    return await updateImageProfile(user, idUser)
+}

@@ -1,4 +1,4 @@
-import { getAll, getOne, create, update, updatePass, remove } from "../services/userService.js"
+import { getAll, getOne, create, update, updatePass, updateImgProfile, remove } from "../services/userService.js"
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -56,6 +56,16 @@ export const deleteUser = async (req, res) => {
 
 }
 
+export const updateImageProfile = async (req, res) => {
+  try {
+    const { image } = req.files
+    let results = await updateImgProfile(image, req.params.id)
+    res.json(results)
+
+  } catch (error) {
+    res.status(400).json({ error: error })
+  }
+}
 
 
 
