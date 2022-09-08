@@ -7,10 +7,11 @@ export const getAll = async () => {
 
 }
 
-export const create = async (name, desc, lng, lat) => {
+export const create = async (name, desc, lng, lat, icon) => {
     const station = {
         nombre: name,
         descripcion: desc,
+        ID_Icono: icon,
         longitud: lng,
         latitud: lat,
     }

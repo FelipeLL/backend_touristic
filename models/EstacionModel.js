@@ -8,7 +8,7 @@ const EstacionModel = db.define(
     ID_Estacion: { type: DataTypes.INTEGER, primaryKey: true },
     nombre: { type: DataTypes.STRING },
     descripcion: { type: DataTypes.STRING },
-    icono: { type: DataTypes.BLOB},
+    ID_Icono: { type: DataTypes.INTEGER },
     longitud: { type: DataTypes.DOUBLE },
     latitud: { type: DataTypes.DOUBLE }
   },

@@ -8,7 +8,7 @@ import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js"
 import estacionRoute from "./routes/estacionRoute.js"
 import imageRoute from "./routes/imageRoute.js"
-
+import iconoRoute from "./routes/iconoRoute.js"
 
 const app = express();
 
@@ -36,6 +36,8 @@ app.use("/users", userRoute);
 app.use("/auth", authRoute);
 app.use("/estaciones", estacionRoute);
 app.use("/images", imageRoute);
+app.use("/iconos", iconoRoute);
+
 //conexión a la base de datos
 try {
   await db.authenticate();

@@ -7,13 +7,14 @@ export const getAllEstaciones = async (req, res) => {
     let results = await getAll()
     res.json(results)
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: error })
   }
 }
 
 export const createEstacion = async (req, res) => {
   try {
-    let results = await create(req.body.nombre, req.body.descripcion, req.body.longitud, req.body.latitud)
+    let results = await create(req.body.nombre, req.body.descripcion, req.body.longitud, req.body.latitud, req.body.icono)
     res.json(results)
   } catch (error) {
     res.status(400).json({ error: error })

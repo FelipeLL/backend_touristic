@@ -67,6 +67,7 @@ export const remove = async (id) => {
 
 export const updateImgProfile = async (file, idUser) => {
     const name = file.name.split(' ').join('')
+    console.log(file);
     const uploadObject = await s3.putObject({
         ACL: "public-read",
         Bucket: Config.bucketName,

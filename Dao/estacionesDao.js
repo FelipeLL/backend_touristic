@@ -1,7 +1,19 @@
 import EstacionModel from "../models/EstacionModel.js"
+import IconoModel from "../models/IconoModel.js"
+
+IconoModel.hasMany(EstacionModel, { foreignKey: "ID_Icono" })
+EstacionModel.belongsTo(IconoModel, { foreignKey: "ID_Icono" })
+
 
 export const getAllEstaciones = async () => {
-    let results = await EstacionModel.findAll()
+    let results = await EstacionModel.findAll({
+        include: [
+            {
+                model: IconoModel,
+                required: true,
+            }
+        ]
+    })
     return results
 }
 
