@@ -47,6 +47,7 @@ export const updatePassword = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
+    await res.clearCookie("jwt");
     let results = await remove(req.params.id)
     res.json({ results })
 
