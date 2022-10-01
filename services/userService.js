@@ -67,16 +67,15 @@ export const remove = async (id) => {
 
 export const updateImgProfile = async (file, idUser) => {
     const name = file.name.split(' ').join('')
-    console.log(file);
     const uploadObject = await s3.putObject({
         ACL: "public-read",
         Bucket: Config.bucketName,
         Body: file.data,
-        Key: name
+        Key: `Perfiles/${name}`
 
     }).promise()
 
-    const urlImage = `https://${Config.bucketName}.${Config.endpoint}/${name}`
+    const urlImage = `https://${Config.bucketName}.${Config.endpoint}/Perfiles/${name}`
 
     const user = {
         fotografia: urlImage
