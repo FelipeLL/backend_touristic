@@ -22,11 +22,10 @@ export const add = async (file, idEstacion) => {
         ACL: "public-read",
         Bucket: Config.bucketName,
         Body: file.data,
-        Key: name
+        Key: `Estaciones/${name}`
 
     }).promise()
-
-    const urlImage = `https://${Config.bucketName}.${Config.endpoint}/${name}`
+    const urlImage = `https://${Config.bucketName}.${Config.cdn}/Estaciones/${name}`
 
     const image = {
         ID_Estacion: idEstacion,
