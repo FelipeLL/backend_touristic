@@ -47,7 +47,7 @@ export const getAll = async (idEstacion) => {
 export const remove = async (idImagen, name) => {
     await s3.deleteObject({
         Bucket: Config.bucketName,
-        Key: name,
+        Key: `Estaciones/${name}`,
     }).promise();
     return await removeImage(idImagen)
 
