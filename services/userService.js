@@ -31,7 +31,7 @@ export const create = async (name, email, password) => {
             nombre: name,
             correo: email,
             password: passHash,
-            fotografia: "https://zoratamagallery.sfo3.digitaloceanspaces.com/perfil.webp",
+            fotografia: "https://zoratamagallery.sfo3.cdn.digitaloceanspaces.com/Utilidades/perfil.webp",
             ID_Tipo_usuario: 2,
         };
         return await createNewUser(user)
